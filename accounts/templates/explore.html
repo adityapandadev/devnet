@@ -1,0 +1,61 @@
+<title>DevNet | Explore Devs</title>
+
+{% extends 'base.html' %} {% block content %}
+
+<!-- this page contains list of all the registered user in devnet  -->
+
+<div class="dn-container">
+  <h1 class="dn-font-secondary" style="text-align: center; color: #ba68c8">
+    Explore Your Fellow developers
+  </h1>
+
+  <div style="text-align: center">
+    <img
+      src="/static/images/devs.svg"
+      alt=""
+      style="height: 350px; width: 50%"
+    />
+  </div>
+  <div style="text-align: center">
+    <form action="{% url 'explore' %}" method="GET">
+      {% csrf_token %}
+      <input
+        value="{{ request.GET.user_name }}"
+        placeholder="Search by devloper name"
+        type="text"
+        name="q"
+        id="tags"
+        class="dn-search-input"
+      />
+      <button type="submit" class="dn-search-btn" style="cursor: pointer">
+        Search <i class="fa fa-search"></i>
+      </button>
+    </form>
+  </div>
+  <br />
+
+  {% for user in object_list %} {% if not user.is_superuser %}
+
+  <div class="dn-explore-dev">
+    <h2 class="dn-explore-dev-items dn-font-para">
+      {{ user.first_name }} {{ user.last_name }}
+    </h2>
+
+    <a
+      href="/send_request/{{ user.id }}/"
+      style="
+        text-decoration: none;
+        padding: 0.5em;
+        border-radius: 5px;
+        background-color: #ba68c8;
+      "
+      class="dn-explore-dev-items dn-font-secondary"
+      >Connect <i class="fa fa-user-plus"></i>
+    </a>
+  </div>
+  {% endif %}{% empty %}
+  <h4>Not Found any user</h4>
+
+  {% endfor %}
+</div>
+{% endblock %}

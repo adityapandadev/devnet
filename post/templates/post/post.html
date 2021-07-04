@@ -1,0 +1,32 @@
+<title>DevNet | Add Post</title>
+{% extends 'base.html' %} {% block content %}
+
+<!-- Template to upload feed posts contents -->
+
+<div class="dn-container dn-container-form dn-font-para">
+  <div class="dn-minor">
+    <img src="/static/images/post.svg" alt="" srcset="" />
+  </div>
+
+  <div class="dn-major">
+    <form enctype="multipart/form-data" method="POST" style="margin-top: 5em">
+      {% csrf_token %} {{ form.as_p }}
+      <input
+        type="submit"
+        value="Submit"
+        style="
+          background-color: #ba68c8;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        "
+      />
+    </form>
+
+    <span style="color: #ba68c8">
+      <p>View Your Profile <a href="{% url 'profile'%}">Click here</a></p>
+    </span>
+  </div>
+</div>
+
+{% endblock %}

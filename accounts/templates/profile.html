@@ -1,0 +1,77 @@
+<title>DevNet | Profile</title>
+
+{% extends 'base.html' %} {% block content %}
+
+<!-- Profile page to show all post created by requested user -->
+
+<div class="dn-container">
+  <h1 class="dn-font-secondary" style="text-align: center; color: #ba68c8">
+    Welcome 👋 {{ request.user.first_name }}
+  </h1>
+  <div style="text-align: center">
+    <img
+      src="/static/images/welcome.gif"
+      alt=""
+      style="height: 200px; width: 200px"
+    />
+  </div>
+
+  <br />
+  <br />
+  <div style="text-align: center">
+    <a
+      href="{% url 'add_post'%}"
+      style="
+        background-color: #ba68c8;
+        padding: 0.8em;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px;
+      "
+      class="dn-font-secondary"
+      >Add Post <i class="fa fa-plus"></i
+    ></a>
+  </div>
+
+  <br />
+
+  <h2 class="dn-font-secondary" style="text-align: center">
+    All Your Posts are below
+  </h2>
+
+  <br />
+
+  <div class="dn-feed-container">
+    {% for post in m %}
+    <div class="dn-feed-card">
+      <img
+        src="/media/{{ post.image }}"
+        alt=""
+        srcset=""
+        height="75%"
+        width="100%"
+      />
+
+      <div class="dn-feed-card-text">
+        <h5 class="dn-font-para">{{ post.caption }}</h5>
+        <h6
+          class="dn-font-secondary"
+          style="text-align: right; font-weight: bold"
+        >
+          ~ {{ post.user.first_name }}
+        </h6>
+      </div>
+    </div>
+    {% empty %}
+    <h4>You haven't posted anything yet</h4>
+    {% endfor %}
+  </div>
+</div>
+<!-- Freind request feature not working, need to checkout and refactor some codes -->
+{% for friend_request in all_friend_requests %}
+<h1>
+  {{ friend_request.from_user }}
+  <a href="/accept_request/{{ friend_request.id }}/">accept request</a>
+</h1>
+
+{% empty %} {% endfor %} {% endblock %}

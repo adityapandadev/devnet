@@ -1,0 +1,129 @@
+{% extends 'base.html' %} {% block content %}
+
+<br />
+
+<!-- Landing page -->
+
+<!-- hero section -->
+
+<div class="dn-container dn-hero-container">
+  <div class="dn-major">
+    <h1 class="dn-hero-heading dn-font-secondary">
+      Welcome 🙏 to <span style="color: #ba68c8"> DevNet </span>
+    </h1>
+    <h3
+      class="dn-hero-para dn-font-para"
+      style="text-align: justify; text-justify: inter-word"
+    >
+      DevNet is platform where you can share your ideas, pictures, and can also
+      view content of other developers on the platform. So what are you waiting
+      for get registered, to upload content and have fun.
+    </h3>
+    <br />
+    {% if user.is_authenticated %}
+    <span>
+      <a href="{% url 'add_post' %}" class="dn-button dn-font-secondary"
+        >Add Post <i class="fa fa-plus"></i
+      ></a>
+    </span>
+
+    {% else %}
+    <span
+      ><a href="{% url 'register' %}" class="dn-button"
+        >Register <i class="fa fa-user-circle"></i
+      ></a>
+      <a href="{% url 'login' %}" class="dn-button"
+        >Log in <i class="fa fa-key"></i
+      ></a>
+    </span>
+    {% endif %}
+  </div>
+  <div class="dn-minor">
+    <img
+      src="/static/images/h1.svg"
+      alt="Hero Image"
+      style="height: 400px; width: 98%"
+    />
+  </div>
+</div>
+
+<!-- latest feed -->
+
+<div class="dn-container">
+  <div style="text-align: center">
+    <h1 class="dn-font-secondary">Latest Feed</h1>
+
+    <!-- Search latest feed -->
+
+    <form action="{% url 'home' %}" method="GET">
+      {% csrf_token %}
+      <input
+        value="{{ request.GET.si }}"
+        placeholder="Search by caption or devloper name"
+        type="text"
+        name="si"
+        class="dn-search-input"
+      />
+      <button type="submit" class="dn-search-btn" style="cursor: pointer">
+        Search <i class="fa fa-search"></i>
+      </button>
+    </form>
+  </div>
+
+  <br />
+
+  <!-- Feed posts uploaded by user -->
+
+  <div class="dn-feed-container">
+    {% for post in post_list %}
+    <div class="dn-feed-card">
+      <img
+        src="/media/{{ post.image }}"
+        alt=""
+        srcset=""
+        height="75%"
+        width="100%"
+      />
+
+      <div class="dn-feed-card-text">
+        <h5 class="dn-font-para">{{ post.caption }}</h5>
+        <h6
+          class="dn-font-secondary"
+          style="text-align: right; font-weight: bold"
+        >
+          ~ {{ post.user.first_name }}
+        </h6>
+      </div>
+    </div>
+    {% empty %}
+    <h4>No Post Available yet</h4>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination button to show previous and next post  -->
+
+  {% if is_paginated %}
+  <div style="text-align: center">
+    <nav aria-label="Page navigation conatiner">
+      <ul class="dn-list">
+        {% if page_obj.has_previous %}
+        <li class="dn-list-item">
+          <a href="?page={{ page_obj.previous_page_number }}" class="page-link"
+            >&laquo; PREV
+          </a>
+        </li>
+        {% endif %} {% if page_obj.has_next %}
+        <li class="dn-list-item">
+          <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+            NEXT &raquo;</a
+          >
+        </li>
+
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

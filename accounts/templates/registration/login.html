@@ -1,0 +1,40 @@
+<title>DevNet | Login</title>
+{% extends 'base.html' %} {% block content %}
+
+<!-- designed login page -->
+
+<div class="dn-container dn-container-form dn-font-para">
+  <div class="dn-minor">
+    <img src="/static/images/login.svg" alt="" srcset="" />
+  </div>
+
+  <div class="dn-major">
+    <form method="POST" style="margin-top: 5em">
+      {% csrf_token %} {{ form.as_p }}
+      <input
+        type="submit"
+        value="Submit"
+        style="
+          background-color: #ba68c8;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        "
+      />
+    </form>
+
+    <span style="color: #ba68c8">
+      <p>If not registered <a href="{% url 'register'%}">Register here</a></p>
+    </span>
+  </div>
+</div>
+
+<!-- <form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
+<span>
+  <p>If not registered <a href="{% url 'register'%}">Register here</a></p>
+</span> -->
+
+{% endblock %}

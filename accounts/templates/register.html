@@ -1,0 +1,33 @@
+<title>DevNet | Registration</title>
+{% extends 'base.html' %} {% block content %}
+
+<!-- Designed Registration form -->
+<!-- Illustration i used is from storyset , it is a great website to checkout -->
+
+<div class="dn-container dn-container-form dn-font-para">
+  <div class="dn-minor">
+    <img src="/static/images/register.svg" alt="" srcset="" />
+  </div>
+
+  <div class="dn-major">
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <input
+        type="submit"
+        value="Submit"
+        style="
+          background-color: #ba68c8;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        "
+      />
+    </form>
+
+    <span style="color: #ba68c8">
+      <p>If already registered <a href="{% url 'login'%}">Login here</a></p>
+    </span>
+  </div>
+</div>
+
+{% endblock %}
